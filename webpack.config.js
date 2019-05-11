@@ -7,5 +7,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./build"),
     filename: "docker-status-telegram-bot.js"
-  }
+  },
+  mode: "production"
 };
