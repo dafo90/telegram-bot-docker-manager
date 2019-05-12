@@ -18,7 +18,7 @@ const onCheckDockers = async function() {
     }
   });
   if (!dockerImageNotUpAndRunning || dockerImageNotUpAndRunning.length === 0) {
-    return "✔️ All Docker container are up and running 🐳";
+    return "🐳 All Docker containers are up and running.";
   }
   let response = "️❗️*Problems detected* 🔧";
   dockerImageNotUpAndRunning.forEach(({ repository, container }) => {

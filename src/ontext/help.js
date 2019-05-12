@@ -19,7 +19,7 @@ function helpForGuest(msg) {
   console.log(
     "Guest request: " + msg.from.first_name + " " + msg.from.last_name
   );
-  return "This bot is for private purposes, there are no functions for guest users.";
+  return "⛔️ This bot is only for private purposes, there are no functionalities for guest users.";
 }
 
 module.exports = onHelp;
