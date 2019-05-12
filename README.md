@@ -2,7 +2,9 @@
 
 [![license][license-image]][license-url]
 
-NodeJS Telegram Bot to start, stop, view status,... of Docker containers
+NodeJS Telegram Bot to manage Docker containers.
+
+You can start, stop, view status,... of your Docker containers through Telegram chat.
 
 ## Usage
 
