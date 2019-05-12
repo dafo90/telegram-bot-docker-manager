@@ -1,61 +1,61 @@
 const keyboardWrapper = require("node-telegram-keyboard-wrapper");
 const {
   getDockerContainers,
-  restartDockerContainer
+  startDockerContainer
 } = require("../utils/docker.api");
 
-const onDockerRestart = async function() {
+const onDockerStart = async function() {
   const dockerContainers = await getDockerContainers();
   const filteredContainers = dockerContainers.filter(({ status }) => {
-    return status.toLowerCase().startsWith("up");
+    return status.toLowerCase().startsWith("exited");
   });
   if (filteredContainers.length > 0) {
     const ik = new keyboardWrapper.InlineKeyboard();
     ik.addRow({
-      text: "Restart all containers",
-      callback_data: "dockerrestart/all"
+      text: "Start all containers",
+      callback_data: "dockerstart/all"
     });
     filteredContainers.forEach(({ image, containerId }) =>
       ik.addRow({
-        text: `Restart ${image.split(":")[0]}`,
-        callback_data: `dockerrestart/${containerId}`
+        text: `Start ${image.split(":")[0]}`,
+        callback_data: `dockerstart/${containerId}`
       })
     );
     return {
-      response: "️❔ Which Docker container would you like to restart?",
+      response: "️❔ Which Docker container would you like to start?",
       options: ik.build()
     };
   }
   return { response: "⚠️ No Docker containers present.", options: undefined };
 };
 
-const onDockerRestartContainerCallbackQuery = async function(action) {
+const onDockerStartContainerCallbackQuery = async function(action) {
   const dockerContainers = await getDockerContainers();
   const filteredContainers = dockerContainers.filter(({ status }) => {
-    return status.toLowerCase().startsWith("up");
+    return status.toLowerCase().startsWith("exited");
   });
-  const errorResponse = "❗️Unknown container, no Docker container restarted.";
+  const errorResponse = "❗️Unknown container, no Docker container started.";
   if (action == "all") {
     if (filteredContainers.length === 0) {
       return errorResponse;
     }
     filteredContainers.forEach(async ({ containerId }) => {
-      await restartDockerContainer(containerId);
+      await startDockerContainer(containerId);
     });
-    return "🐳 All Docker containers have been restarted.";
+    return "🐳 All Docker containers have been started.";
   }
   const container = filteredContainers.find(({ containerId }) => {
     return containerId === action;
   });
-  const restartedContainerId = await restartDockerContainer(
+  const startedContainerId = await startDockerContainer(
     container.containerId
   );
-  if (restartedContainerId.split("\n")[0] !== container.containerId) {
+  if (startedContainerId.split("\n")[0] !== container.containerId) {
     return `❗️ An error has occurred during *${
       container.image.split(":")[0]
-    }* restart.`;
+    }* start.`;
   }
-  return `🐳 *${container.image.split(":")[0]}* has been restarted.`;
+  return `🐳 *${container.image.split(":")[0]}* has been started.`;
 };
 
-module.exports = { onDockerRestart, onDockerRestartContainerCallbackQuery };
+module.exports = { onDockerStart, onDockerStartContainerCallbackQuery };

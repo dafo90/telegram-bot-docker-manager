@@ -19,6 +19,14 @@ const {
   onDockerRestart,
   onDockerRestartContainerCallbackQuery
 } = require("./ontext/docker.restart");
+const {
+  onDockerStart,
+  onDockerStartContainerCallbackQuery
+} = require("./ontext/docker.start");
+const {
+  onDockerStop,
+  onDockerStopContainerCallbackQuery
+} = require("./ontext/docker.stop");
 
 dotenv.config();
 
@@ -80,6 +88,40 @@ bot.onText(/^\/dockerrestart/, msg => {
   }
 });
 
+bot.onText(/^\/dockerstart/, msg => {
+  if (canAnswer(msg.chat)) {
+    onDockerStart().then(({ response, options }) => {
+      bot.sendMessage(
+        msg.chat.id,
+        response,
+        options
+          ? {
+              ...options,
+              parse_mode: "Markdown"
+            }
+          : { parse_mode: "Markdown" }
+      );
+    });
+  }
+});
+
+bot.onText(/^\/dockerstop/, msg => {
+  if (canAnswer(msg.chat)) {
+    onDockerStop().then(({ response, options }) => {
+      bot.sendMessage(
+        msg.chat.id,
+        response,
+        options
+          ? {
+              ...options,
+              parse_mode: "Markdown"
+            }
+          : { parse_mode: "Markdown" }
+      );
+    });
+  }
+});
+
 bot.on("callback_query", query => {
   if (canAnswer(query.message.chat)) {
     let callbackFunction;
@@ -92,6 +134,12 @@ bot.on("callback_query", query => {
         break;
       case "dockerrestart":
         callbackFunction = onDockerRestartContainerCallbackQuery;
+        break;
+      case "dockerstart":
+        callbackFunction = onDockerStartContainerCallbackQuery;
+        break;
+      case "dockerstop":
+        callbackFunction = onDockerStopContainerCallbackQuery;
         break;
       default:
         console.error(

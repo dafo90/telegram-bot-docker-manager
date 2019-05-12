@@ -8,12 +8,13 @@ async function getDockerImages() {
 }
 
 async function getDockerContainers() {
-  const { stdout, stderr } = await exec("docker ps");
+  const { stdout, stderr } = await exec("docker ps -a");
   return tableAsArray(stdout);
 }
 
 async function startDockerContainer(containerId) {
-
+  const { stdout, stderr } = await exec(`docker start ${containerId}`);
+  return stdout; // Return the container ID
 }
 
 async function restartDockerContainer(containerId) {
@@ -22,9 +23,14 @@ async function restartDockerContainer(containerId) {
 }
 
 async function stopDockerContainer(containerId) {
+  const { stdout, stderr } = await exec(`docker stop ${containerId}`);
+  return stdout; // Return the container ID
 }
 
-async function updateDockerContainer(containerId) {
-}
-
-module.exports = { getDockerImages, getDockerContainers, restartDockerContainer };
+module.exports = {
+  getDockerImages,
+  getDockerContainers,
+  startDockerContainer,
+  restartDockerContainer,
+  stopDockerContainer
+};

@@ -14,7 +14,9 @@ function helpForRegisteredUser(msg) {
     "/dockerimages - List of Docker images\n" +
     "/dockercontainers - List of Docker containers\n" +
     "/dockerstatus - Execute an immediate check of all Docker containers to verify if they are up and running\n" +
-    "/dockerrestart - Restart Docker container"
+    "/dockerrestart - Restart Docker container\n" +
+    "/dockerstart - Start Docker container\n" +
+    "/dockerstop - Stop Docker container"
   );
 }
 
