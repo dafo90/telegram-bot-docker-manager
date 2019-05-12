@@ -66,3 +66,6 @@ yarn.lock
 
 # Build
 build/
+
+# Running generated files
+errors_db.json

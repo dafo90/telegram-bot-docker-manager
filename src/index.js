@@ -3,6 +3,7 @@ process.env.NTBA_FIX_319 = 1; // To prevent deprecated message
 const dotenv = require("dotenv");
 const TelegramBot = require("node-telegram-bot-api");
 
+const startDockerCronjob = require("./cronjob/docker.cronjob");
 const canAnswer = require("./validator/validate.chat");
 const onHelp = require("./ontext/help");
 const {
@@ -20,7 +21,7 @@ dotenv.config();
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
-bot.on("polling_error", err => console.log(err));
+startDockerCronjob(bot);
 
 bot.onText(/^\/(start|help)/, msg => {
   onHelp(msg).then(response => {
@@ -30,7 +31,7 @@ bot.onText(/^\/(start|help)/, msg => {
 
 bot.onText(/^\/dockerimages/, msg => {
   if (canAnswer(msg.chat)) {
-    onDockerImages(msg).then(({ response, options }) => {
+    onDockerImages().then(({ response, options }) => {
       bot.sendMessage(msg.chat.id, response, {
         ...options,
         parse_mode: "Markdown"
@@ -41,7 +42,7 @@ bot.onText(/^\/dockerimages/, msg => {
 
 bot.onText(/^\/dockercontainers/, msg => {
   if (canAnswer(msg.chat)) {
-    onDockerContainers(msg).then(({ response, options }) => {
+    onDockerContainers().then(({ response, options }) => {
       bot.sendMessage(msg.chat.id, response, {
         ...options,
         parse_mode: "Markdown"
@@ -52,7 +53,7 @@ bot.onText(/^\/dockercontainers/, msg => {
 
 bot.onText(/^\/dockerstatus/, msg => {
   if (canAnswer(msg.chat)) {
-    onDockerStatus(msg).then(response => {
+    onDockerStatus().then(({ response }) => {
       bot.sendMessage(msg.chat.id, response, { parse_mode: "Markdown" });
     });
   }
@@ -69,7 +70,7 @@ bot.on("callback_query", query => {
         callbackFunction = onDockerContainerCallbackQuery;
         break;
       default:
-        console.log(
+        console.error(
           `query.data not known: ${query.data.split("/")[0]}, not processed`
         );
     }
@@ -84,3 +85,5 @@ bot.on("callback_query", query => {
       });
   }
 });
+
+bot.on("polling_error", err => console.log(err));

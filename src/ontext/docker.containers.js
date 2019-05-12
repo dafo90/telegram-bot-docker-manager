@@ -1,7 +1,7 @@
 const keyboardWrapper = require("node-telegram-keyboard-wrapper");
 const { getDockerContainers } = require("../utils/docker.api");
 
-const onDockerContainers = async function(msg) {
+const onDockerContainers = async function() {
   const dockerContainers = await getDockerContainers();
   const listOfDockerContainers = dockerContainers
     .map(({ image, status }) => `${image.split(":")[0]} - ${status}`)

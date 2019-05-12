@@ -1,7 +1,7 @@
 const keyboardWrapper = require("node-telegram-keyboard-wrapper");
 const { getDockerImages } = require("../utils/docker.api");
 
-const onDockerImages = async function(msg) {
+const onDockerImages = async function() {
   const dockerImages = await getDockerImages();
   const listOfDockerImages = dockerImages
     .map(({ repository, tag }) => `${repository} - ${tag}`)

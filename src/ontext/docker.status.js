@@ -1,6 +1,6 @@
 const { getDockerImages, getDockerContainers } = require("../utils/docker.api");
 
-const onDockerStatus = async function() {
+async function executeCheck() {
   const dockerImages = await getDockerImages();
   const dockerContainers = await getDockerContainers();
   const dockerImageNotUpAndRunning = [];
@@ -15,18 +15,27 @@ const onDockerStatus = async function() {
       dockerImageNotUpAndRunning.push(dockerImage);
     }
   });
+  return dockerImageNotUpAndRunning;
+}
+
+const onDockerStatus = async function() {
+  const dockerImageNotUpAndRunning = await executeCheck();
   if (!dockerImageNotUpAndRunning || dockerImageNotUpAndRunning.length === 0) {
-    return "🐳 All Docker containers are up and running.";
+    return {
+      error: false,
+      response: "🐳 All Docker containers are up and running."
+    };
   }
-  let response = "️❗️*Problems detected* 🔧";
-  dockerImageNotUpAndRunning.forEach(({ repository, container }) => {
-    if (container) {
-      response += `\n${repository} - ${container.status} ❌`;
-    } else {
-      response += `\n${repository} - not started ⚠️`;
-    }
-  });
-  return response;
+  const response =
+    "️❗️*Problems detected* 🔧\n" +
+    dockerImageNotUpAndRunning
+      .map(({ repository, container }) =>
+        container
+          ? `${repository} - ${container.status} ❌`
+          : `${repository} - not started ⚠️`
+      )
+      .join("\n");
+  return { error: true, response, dockerImageNotUpAndRunning };
 };
 
 module.exports = onDockerStatus;

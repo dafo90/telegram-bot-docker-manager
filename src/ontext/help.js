@@ -18,7 +18,7 @@ function helpForRegisteredUser(msg) {
 }
 
 function helpForGuest(msg) {
-  console.log(
+  console.error(
     "Guest request: " + msg.from.first_name + " " + msg.from.last_name
   );
   return "⛔️ This bot is only for private purposes, there are no functionalities for guest users.";
