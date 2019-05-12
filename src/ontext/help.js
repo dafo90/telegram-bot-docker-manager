@@ -13,7 +13,8 @@ function helpForRegisteredUser(msg) {
     "/help or /start - Help menu\n" +
     "/dockerimages - List of Docker images\n" +
     "/dockercontainers - List of Docker containers\n" +
-    "/dockerstatus - Execute an immediate check of all Docker containers to verify if they are up and running"
+    "/dockerstatus - Execute an immediate check of all Docker containers to verify if they are up and running\n" +
+    "/dockerrestart - Restart Docker container"
   );
 }
 

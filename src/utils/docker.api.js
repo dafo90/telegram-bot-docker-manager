@@ -12,4 +12,19 @@ async function getDockerContainers() {
   return tableAsArray(stdout);
 }
 
-module.exports = { getDockerImages, getDockerContainers };
+async function startDockerContainer(containerId) {
+
+}
+
+async function restartDockerContainer(containerId) {
+  const { stdout, stderr } = await exec(`docker restart ${containerId}`);
+  return stdout; // Return the container ID
+}
+
+async function stopDockerContainer(containerId) {
+}
+
+async function updateDockerContainer(containerId) {
+}
+
+module.exports = { getDockerImages, getDockerContainers, restartDockerContainer };
