@@ -1,16 +1,16 @@
-# Docker status checker and Telegram Bot notifier
+# Docker Manager with Telegram Bot
 
 [![license][license-image]][license-url]
 
-NodeJS Docker containers status checker and Telegram Bot notifier
+NodeJS Telegram Bot to start, stop, view status,... of Docker containers
 
 ## Usage
 
 1. **Clone repository**
 
    ```
-   git clone git@github.com:dafo90/docker-status-telegram-bot.git
-   cd docker-status-telegram-bot
+   git clone git@github.com:dafo90/telegram-bot-docker-manager.git
+   cd telegram-bot-docker-manager
    ```
 
 2. **Create .env file and replace `YOUR-TELEGRAM-TOKEN` and `YOUR-BOT-CHAT-IDS-COMMASEPARATED` (or set as Environment Variables)**
@@ -38,4 +38,4 @@ NodeJS Docker containers status checker and Telegram Bot notifier
    ```
 
 [license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
-[license-url]: https://github.com/dafo90/docker-status-telegram-bot/blob/master/LICENSE
+[license-url]: https://github.com/dafo90/telegram-bot-docker-manager/blob/master/LICENSE
