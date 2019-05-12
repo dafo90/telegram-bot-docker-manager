@@ -6,7 +6,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./build"),
-    filename: "docker-status-telegram-bot.js"
+    filename: "telegram-bot-docker-manager.js"
   },
   mode: "production"
 };

@@ -11,6 +11,8 @@ const onHelp = async function(msg) {
 function helpForRegisteredUser(msg) {
   return (
     "/help or /start - Help menu\n" +
+    "/dockerimages - List of Docker images\n" +
+    "/dockercontainers - List of Docker containers\n" +
     "/dockerstatus - Execute an immediate check of all Docker containers to verify if they are up and running"
   );
 }
