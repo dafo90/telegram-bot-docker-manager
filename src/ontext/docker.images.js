@@ -1,16 +1,12 @@
-const keyboardWrapper = require("node-telegram-keyboard-wrapper");
-const { getDockerImages } = require("../utils/docker.api");
+const keyboardWrapper = require('node-telegram-keyboard-wrapper');
+const { getDockerImages } = require('../utils/docker.api');
 
-const onDockerImages = async function() {
+const onDockerImages = async () => {
   const dockerImages = await getDockerImages();
-  const listOfDockerImages = dockerImages
-    .map(({ repository, tag }) => `${repository} - ${tag}`)
-    .join("\n");
+  const listOfDockerImages = dockerImages.map(({ repository, tag }) => `${repository} - ${tag}`).join('\n');
   const response =
-    "️📃️ *Docker images*\n" +
-    (listOfDockerImages && listOfDockerImages.length > 0
-      ? listOfDockerImages
-      : "No Docker images present");
+    '️📃️ *Docker images*\n' +
+    (listOfDockerImages && listOfDockerImages.length > 0 ? listOfDockerImages : 'No Docker images present');
   let options = {};
   if (listOfDockerImages && listOfDockerImages.length > 0) {
     const ik = new keyboardWrapper.InlineKeyboard();
@@ -25,11 +21,9 @@ const onDockerImages = async function() {
   return { response, options };
 };
 
-const onDockerImageCallbackQuery = async function(action) {
+const onDockerImageCallbackQuery = async action => {
   const dockerImages = await getDockerImages();
-  const image = dockerImages.find(({ imageId }) => {
-    return imageId === action;
-  });
+  const image = dockerImages.find(({ imageId }) => imageId === action);
   return (
     `🐳 Image *${image.repository}*\n` +
     `Tag - ${image.tag}\n` +

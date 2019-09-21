@@ -1,22 +1,22 @@
-const keyboardWrapper = require("node-telegram-keyboard-wrapper");
-const { getDockerContainers } = require("../utils/docker.api");
+const keyboardWrapper = require('node-telegram-keyboard-wrapper');
+const { getDockerContainers } = require('../utils/docker.api');
 
-const onDockerContainers = async function() {
+const onDockerContainers = async () => {
   const dockerContainers = await getDockerContainers();
   const listOfDockerContainers = dockerContainers
-    .map(({ image, status }) => `${image.split(":")[0]} - ${status}`)
-    .join("\n");
+    .map(({ image, status }) => `${image.split(':')[0]} - ${status}`)
+    .join('\n');
   const response =
-    "️📃️ *Docker containers*\n" +
+    '️📃️ *Docker containers*\n' +
     (listOfDockerContainers && listOfDockerContainers.length > 0
       ? listOfDockerContainers
-      : "No Docker containers present");
+      : 'No Docker containers present');
   let options = {};
   if (listOfDockerContainers && listOfDockerContainers.length > 0) {
     const ik = new keyboardWrapper.InlineKeyboard();
     dockerContainers.forEach(({ image, containerId }) =>
       ik.addRow({
-        text: `${image.split(":")[0]} status`,
+        text: `${image.split(':')[0]} status`,
         callback_data: `dockercontainers/${containerId}`
       })
     );
@@ -25,11 +25,9 @@ const onDockerContainers = async function() {
   return { response, options };
 };
 
-const onDockerContainerCallbackQuery = async function(action) {
+const onDockerContainerCallbackQuery = async action => {
   const dockerContainers = await getDockerContainers();
-  const container = dockerContainers.find(({ containerId }) => {
-    return containerId === action;
-  });
+  const container = dockerContainers.find(({ containerId }) => containerId === action);
   return (
     `🐳 Container *${container.image}*\n` +
     `Container ID - ${container.containerId}\n` +

@@ -1,12 +1,14 @@
-const path = require("path");
-const nodeExternals = require("webpack-node-externals");
+const path = require('path');
+const packageJson = require('./package.json');
+
+const { name: projectName, main } = packageJson;
 
 module.exports = {
-  target: "node",
-  entry: "./src/index.js",
+  target: 'node',
+  entry: `./${main}`,
   output: {
-    path: path.resolve(__dirname, "./build"),
-    filename: "telegram-bot-docker-manager.js"
+    path: path.resolve(__dirname, './build'),
+    filename: `${projectName}.js`
   },
-  mode: "production"
+  mode: 'production'
 };
