@@ -14,17 +14,17 @@
   "author": "dafo90",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^8.1.0",
-    "node-telegram-bot-api": "^0.30.0",
+    "dotenv": "^8.2.0",
+    "node-telegram-bot-api": "^0.40.0",
     "node-telegram-keyboard-wrapper": "^2.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^6.3.0",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.19.2",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7",
+    "eslint": "^6.7.2",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"
   }
 }
